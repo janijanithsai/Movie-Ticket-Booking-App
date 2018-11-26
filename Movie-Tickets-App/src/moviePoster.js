@@ -8,6 +8,11 @@ import {
   View
 } from "react-native";
 import { defaultStyles } from "./styles";
+import { movies } from "./data";
+
+// var poster = movies.map(node => node.poster);
+// var title = movies.map(node => node.title);
+// var genre = movies.map(node => node.genre);
 
 const { width, height } = Dimensions.get("window");
 //screen dimentions
@@ -19,8 +24,18 @@ const cols = 3,
 export default class MoviePoster extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      popUpIsOpen: props.popUpIsOpen,
+      title: props.title,
+      genre: props.genre,
+      poster: props.poster
+    };
     //this.handleClick = this.handleClick.bind(this);
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.state.popUpIsOpen !== nextProps.popUpIsOpen) {
+      this.setState({ popUpIsOpen: nextProps.popUpIsOpen });
+    }
   }
 
   //   handleClick = () => {
@@ -32,24 +47,25 @@ export default class MoviePoster extends Component {
   // Component prop types
 
   render() {
-    const {
-      movie,
-      movie: { title, genre, poster },
-      onOpen
-    } = this.props;
+    console.log(this.state.title);
+    // const {
+    //   movie,
+    //   movie: { title, genre, poster },
+    //   onOpen
+    // } = this.props;
     return (
       <TouchableOpacity
         style={styles.container}
-        //onPress={() => this.handleClick(movie)}
+        onPress={() => this.props.openMovie()}
       >
         <View style={styles.imageContainer}>
-          <Image source={{ uri: poster }} style={styles.image} />
+          <Image source={{ uri: this.state.poster }} style={styles.image} />
         </View>
         <Text style={styles.title} numberOfLines={1}>
-          {title}
+          {this.state.title}
         </Text>
         <Text style={styles.genre} numberOfLines={1}>
-          {genre}
+          {this.state.genre}
         </Text>
       </TouchableOpacity>
     );
