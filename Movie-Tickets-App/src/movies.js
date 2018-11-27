@@ -8,26 +8,48 @@ export default class Movies extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      popupIsOpen: false
+      popupIsOpen: false,
+      title: "",
+      genre: "",
+      poster: "",
+      chosenDay: 0,
+      chosenTime: null
     };
     //this.openMovie = this.openMovie.bind(this);
     //this.handleClick = this.handleClick.bind(this);
   }
 
-  openMovie = () => {
+  openMovie = (title, genre, poster) => {
     this.setState({
-      popupIsOpen: true
+      popupIsOpen: true,
+      title: title,
+      genre: genre,
+      poster: poster
     });
   };
 
   closeMovie = () => {
     this.setState({
-      popupIsOpen: false
+      popupIsOpen: false,
+      chosenDay: 0,
+      chosenTime: null
+    });
+  };
+
+  chooseDay = day => {
+    this.setState({
+      chosenDay: day
+    });
+  };
+
+  chooseTime = time => {
+    this.setState({
+      chosenTime: time
     });
   };
 
   render() {
-    console.log(this.state.popupIsOpen);
+    console.log(this.state.title);
     return (
       <View style={styles.container}>
         <ScrollView
@@ -47,9 +69,15 @@ export default class Movies extends Component {
           ))}
         </ScrollView>
         <MoviePopup
-          movie={this.state.movie}
+          title={this.state.title}
+          genre={this.state.genre}
+          poster={this.state.poster}
           isOpen={this.state.popupIsOpen}
           onClose={this.closeMovie}
+          chosenDay={this.state.chosenDay}
+          chosenTime={this.state.chosenTime}
+          onChooseDay={this.chooseDay}
+          onChooseTime={this.chooseTime}
         />
       </View>
     );

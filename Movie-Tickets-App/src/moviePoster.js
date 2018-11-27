@@ -8,7 +8,6 @@ import {
   View
 } from "react-native";
 import { defaultStyles } from "./styles";
-import { movies } from "./data";
 
 // var poster = movies.map(node => node.poster);
 // var title = movies.map(node => node.title);
@@ -36,6 +35,15 @@ export default class MoviePoster extends Component {
     if (this.state.popUpIsOpen !== nextProps.popUpIsOpen) {
       this.setState({ popUpIsOpen: nextProps.popUpIsOpen });
     }
+    if (this.state.title !== nextProps.title) {
+      this.setState({ title: nextProps.title });
+    }
+    if (this.state.genre !== nextProps.genre) {
+      this.setState({ genre: nextProps.genre });
+    }
+    if (this.state.poster !== nextProps.poster) {
+      this.setState({ poster: nextProps.poster });
+    }
   }
 
   //   handleClick = () => {
@@ -56,7 +64,13 @@ export default class MoviePoster extends Component {
     return (
       <TouchableOpacity
         style={styles.container}
-        onPress={() => this.props.openMovie()}
+        onPress={() =>
+          this.props.openMovie(
+            this.state.title,
+            this.state.genre,
+            this.state.poster
+          )
+        }
       >
         <View style={styles.imageContainer}>
           <Image source={{ uri: this.state.poster }} style={styles.image} />
