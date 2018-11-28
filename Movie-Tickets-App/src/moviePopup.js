@@ -12,6 +12,13 @@ import {
   View
 } from "react-native";
 import { defaultStyles } from "./styles";
+import Options from "./options";
+
+import { movies } from "./data";
+
+var days = movies.map(movie => movie.days);
+days.length = 1;
+var dayArray = days[0];
 
 // Get screen dimensions
 const { width, height } = Dimensions.get("window");
@@ -38,30 +45,10 @@ export default class MoviePopup extends Component {
       title: props.title,
       genre: props.genre,
       poster: props.poster
+      // days: props.days,
+      // time: props.time
     };
   }
-
-  // static propTypes = {
-  //   isOpen: PropTypes.bool.isRequired,
-  //   // Movie object that has title, genre, poster, days and times
-  //   //movie: PropTypes.object,
-  //   // Index of chosen day
-  //   chosenDay: PropTypes.number,
-  //   // Index of chosem show time
-  //   chosenTime: PropTypes.number,
-  //   // Gets called when user chooses day
-  //   onChooseDay: PropTypes.func,
-  //   // Gets called when user chooses time
-  //   onChooseTime: PropTypes.func,
-  //   // Gets called when user books their ticket
-  //   onBook: PropTypes.func,
-  //   // Gets called when popup closed
-  //   onClose: PropTypes.func
-  // };
-
-  // When user starts pulling popup previous height gets stored here
-  // to help us calculate new height value during and after pulling
-  _previousHeight = 0;
 
   componentWillMount() {
     // Initialize PanResponder to handle move gestures
@@ -158,6 +145,12 @@ export default class MoviePopup extends Component {
     if (this.state.poster !== nextProps.poster) {
       this.setState({ poster: nextProps.poster });
     }
+    if (this.state.days !== nextProps.days) {
+      this.setState({ days: nextProps.days });
+    }
+    if (this.state.time !== nextProps.time) {
+      this.setState({ time: nextProps.time });
+    }
   }
 
   // Open popup
@@ -218,18 +211,8 @@ export default class MoviePopup extends Component {
   };
 
   render() {
-    // const {
-    //   movie,
-    //   chosenDay,
-    //   chosenTime,
-    //   onChooseDay,
-    //   onChooseTime,
-    //   onBook
-    // } = this.props;
-    //console.log(this.state.movie);
-    // Pull out movie data
-    //const { title, genre, poster, days, times } = movie || {};
-    // Render nothing if not visible
+    const { chosenDay, chosenTime, onChooseDay, onChooseTime } = this.props;
+    // const { days, times } = movie || {};
     if (!this.state.visible) {
       return null;
     }
@@ -280,11 +263,24 @@ export default class MoviePopup extends Component {
               {/* Day */}
               <Text style={styles.sectionHeader}>Day</Text>
               {/* TODO: Add day options here */}
-              <Text>Add day options here</Text>
+              {dayArray.map(days => (
+                <Text>{days}</Text>
+              ))}
+              {/* <Options
+                //values={movie.days}
+                chosen={chosenDay}
+                onChoose={onChooseDay}
+              /> */}
+
               {/* Time */}
               <Text style={styles.sectionHeader}>Showtime</Text>
               {/* TODO: Add show time options here */}
-              <Text>Add show time options here</Text>
+
+              {/* <Options
+                //values={movie.times}
+                chosen={chosenTime}
+                onChoose={onChooseTime}
+              /> */}
             </View>
           </View>
           {/* Footer */}

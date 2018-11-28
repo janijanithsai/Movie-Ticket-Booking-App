@@ -12,6 +12,8 @@ export default class Movies extends Component {
       title: "",
       genre: "",
       poster: "",
+      days: "",
+      time: "",
       chosenDay: 0,
       chosenTime: null
     };
@@ -19,12 +21,13 @@ export default class Movies extends Component {
     //this.handleClick = this.handleClick.bind(this);
   }
 
-  openMovie = (title, genre, poster) => {
+  openMovie = (title, genre, poster, days) => {
     this.setState({
       popupIsOpen: true,
       title: title,
       genre: genre,
-      poster: poster
+      poster: poster,
+      days: days
     });
   };
 
